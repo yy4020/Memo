@@ -14,21 +14,34 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 /**
  * 悬浮窗Service 该服务会在后台一直运行一个悬浮的透明的窗体。
  * 
  * @author caiyingyuan
  * */
-public class FloatingServicce extends Service implements OnClickListener {
+public class FloatingServicce extends Service {
+
+	
 
 	private int statusBarHeight;// 状态栏高度
 	private View view;// 透明窗体
 	private boolean viewAdded = false;// 透明窗体是否已经显示
 	private WindowManager windowManager;
 	private WindowManager.LayoutParams layoutParams;
+	private boolean hideItem=true;
+	private RelativeLayout itemLayout;
+	private Button setting;
 	private Button record;
+	private Button check;
+	private Button add;
+	TranslateAnimation left, right;
+	Animation up, down;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -40,7 +53,20 @@ public class FloatingServicce extends Service implements OnClickListener {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		
+		//LayoutInflater是用来找layout下xml布局文件，并且实例化！而findViewById()是找具体xml下的具体 widget控件.
 		view = LayoutInflater.from(this).inflate(R.layout.floating, null);
+		itemLayout=(RelativeLayout)view.findViewById(R.id.item);
+		
+		setting=(Button)view.findViewById(R.id.setting);
+		record=(Button)view.findViewById(R.id.record);
+		check=(Button)view.findViewById(R.id.check);
+		add=(Button)view.findViewById(R.id.add);
+		
+		setting.setOnClickListener(new onClickBtnListener());
+		record.setOnClickListener(new onClickBtnListener());
+		check.setOnClickListener(new onClickBtnListener());
+		add.setOnClickListener(new onClickBtnListener());
 		
 		windowManager = (WindowManager) this.getSystemService(WINDOW_SERVICE);
 		/*
@@ -53,11 +79,12 @@ public class FloatingServicce extends Service implements OnClickListener {
 				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
 		// layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM; //悬浮窗开始在右下角显示
 		layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-
+		Log.d("FloatingServicce", "create...");
+		
 		view.setOnTouchListener(new OnTouchListener() {
 			float[] temp = new float[] { 0f, 0f };
-
 			public boolean onTouch(View v, MotionEvent event) {
+				
 				layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
 				int eventaction = event.getAction();
 				switch (eventaction) {
@@ -70,11 +97,19 @@ public class FloatingServicce extends Service implements OnClickListener {
 					refreshView((int) (event.getRawX() - temp[0]),
 							(int) (event.getRawY() - temp[1]));
 					break;
-
+				case MotionEvent.ACTION_UP:
+					
+//					if(event.getRawX()== temp[0]&&event.getRawY() == temp[1]){
+						showItem();		
+//					}
+								
+					break;
 				}
 				return true;
 			}
+			
 		});
+		
 	}
 
 	/**
@@ -121,7 +156,29 @@ public class FloatingServicce extends Service implements OnClickListener {
 			viewAdded = false;
 		}
 	}
+	private void showItem() {
+		// TODO Auto-generated method stub
+		
+		if(hideItem){
+			//加载动画XML文件,生成动画指令 
+	        Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale); 
+	        Animation animTranslate=AnimationUtils.loadAnimation(this, R.anim.translate);
+	        Animation animRorate = AnimationUtils.loadAnimation(this, R.anim.rorate); 
+	        Animation anim = AnimationUtils.loadAnimation(this, R.anim.rorate); 
 
+	      //开始执行动画 
+	        itemLayout.startAnimation(animScale); 
+//	        itemLayout.startAnimation(animRorate); 
+//	        itemLayout.startAnimation(animTranslate); 
+			itemLayout.setVisibility(View.VISIBLE);
+			hideItem=false;
+		}else{
+			itemLayout.setVisibility(View.GONE);
+			hideItem=true;
+		}
+		
+	}
+	
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
@@ -136,42 +193,31 @@ public class FloatingServicce extends Service implements OnClickListener {
 		removeView();
 	}
 
-	boolean isBegan=true;
-	
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		Log.d("record", "record...");
-		
-			// 本地录音1
-			int LOCAL_RECORD = 1;
-			int CALL_RECORD = 0;
-			Record localRecord = Record.getsInstance();
-			if (isBegan) {
-				record.setText("录音...");
-				localRecord.beginMediaRecording(LOCAL_RECORD);
-//				btnClickable(false);
-//				LocRecord1.setEnabled(true);
-				isBegan = false;
-			} else {
-				localRecord.endMediaRecording();
-//				LocRecord1.setText("本地录音1");
-//				btnClickable(true);
-				isBegan = true;
-				record.setText("录音完成,录音文件大小为：" + localRecord.fileLen());
-//				record.setText("完成");
+	public class onClickBtnListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub		
+			if(v.getId()==R.id.setting){
+//				settingView = LayoutInflater.from(FloatingServicce.this).inflate(R.layout.setting, null);
+//				windowManager.addView(settingView, mParams);
+				Intent intent=new Intent(FloatingServicce.this, newActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
 			}
-		
-		
+			if(v.getId()==R.id.record){
+				
+			}
+			if(v.getId()==R.id.check){
+				
+			}
+			if(v.getId()==R.id.add){
+				
+			}
+		}
+
 	}
-
-
-	// class StatusBarReceiver extends BroadcastReceiver{
-	//
-	// @Override
-	// public void onReceive(Context context, Intent intent) {
-	// //intent.get
-	// }
-	//
-	// }
+	
+	
 }

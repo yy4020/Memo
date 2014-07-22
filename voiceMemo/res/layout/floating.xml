@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     >
 
-   <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical"
-        android:background="@drawable/anzai_middle_green"
-        android:orientation="horizontal" >
-        
 <!-- 
-        <Button
-            android:id="@+id/record"
-            android:layout_width="15dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:text="录音"
-            android:background="@drawable/ad_block_checkbox_bg"
-            android:textColor="#ffffff" />
-  -->   
-    </LinearLayout>
-
-    <ImageButton
+    <Button
         android:id="@+id/floating_button_hide"
         style="\?android:buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -33,5 +13,58 @@
         android:visibility="gone"
         android:background="@drawable/off"
          />
+ -->
+<ImageView
+        android:id="@+id/float_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/main_btn" />
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/float_id"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item" />
+ 	<Button
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    		android:layout_toRightOf="@+id/setting"
+    		android:layout_alignTop="@+id/setting"
+    		android:layout_marginTop="40dp"
+            android:background="@drawable/item" />
+        <Button
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/record"
+    		android:layout_below="@+id/record"
+            android:background="@drawable/item" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/check"
+            android:layout_alignTop="@+id/check"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/add" />
+
+       
+
+    </RelativeLayout>
+
+    
+
+</RelativeLayout>
