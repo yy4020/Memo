@@ -1,7 +1,12 @@
 package com.example.voicememo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.IBinder;
@@ -19,7 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import cn.qihoo.calendar.audio.AudioRecord;
+import android.widget.Toast;
 
 /**
  * 悬浮窗Service 该服务会在后台一直运行一个悬浮的透明的窗体。
@@ -29,7 +34,7 @@ import cn.qihoo.calendar.audio.AudioRecord;
 public class FloatingServicce extends Service {
 
 	
-
+	private String FlAG_LOG="FloatingServicce";
 	private int statusBarHeight;// 状态栏高度
 	private View view;// 透明窗体
 	private boolean viewAdded = false;// 透明窗体是否已经显示
@@ -216,14 +221,52 @@ public class FloatingServicce extends Service {
 				showItem( );
 			}
 			if(v.getId()==R.id.check){
-				
+				Intent intent=new Intent(FloatingServicce.this, QueryActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
+				showItem( );
 			}
 			if(v.getId()==R.id.add){
-				
+				Toast.makeText(FloatingServicce.this, "click", Toast.LENGTH_SHORT).show();
+				getAllApps();
+				launchApp();
 			}
 		}
 
 	}
 	
-	
+	/**获得手机内应用的包名，返回一个List集合**/   
+    public List<PackageInfo> getAllApps() {     
+            List<PackageInfo> apps = new ArrayList<PackageInfo>();     
+            PackageManager packageManager = this.getPackageManager();     
+            //获取手机内所有应用     
+            List<PackageInfo> paklist = packageManager.getInstalledPackages(0);     
+            for (int i = 0; i < paklist.size(); i++) {     
+                PackageInfo pak = (PackageInfo) paklist.get(i);     
+                //判断是否为非系统预装的应用  (大于0为系统预装应用，小于等于0为非系统应用)   
+                if ((pak.applicationInfo.flags & pak.applicationInfo.FLAG_SYSTEM) <= 0) {     
+                    apps.add(pak);     
+                }     
+            }     
+            return apps;     
+    }   
+    //获得包名后，就可以通过获得要启动的包名启动应用了 
+    public void launchApp() {   
+        PackageManager packageManager = this.getPackageManager();   
+        List<PackageInfo> packages = getAllApps();   
+        PackageInfo pa = null;   
+        for(int i=0;i<packages.size();i++){   
+            pa = packages.get(i);   
+            //获得应用名   
+            String appLabel = packageManager.getApplicationLabel(pa.applicationInfo).toString();   
+            //获得包名   
+            String appPackage = pa.packageName;   
+            Log.d(FlAG_LOG+i, appLabel+"  "+appPackage);   
+        }   
+        Intent intent = packageManager.getLaunchIntentForPackage("jp.co.johospace.jorte");//"jp.co.johospace.jorte"就是我们获得要启动应用的包名   
+        startActivity(intent);   
+    }   
+
+
 }

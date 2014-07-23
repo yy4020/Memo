@@ -1,5 +1,6 @@
 package cn.qihoo.calendar.audio;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
@@ -18,11 +19,13 @@ public class PlayAudio extends Activity {
 	private PlayButton mPlayButton = null;
 	private MediaPlayer mPlayer = null;
 
-	
 	public PlayAudio() {
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/"+System.currentTimeMillis()+".3gp";
-    }
+		String sdcardDir = Environment.getExternalStorageDirectory()
+				.getAbsolutePath();
+		String fileDir = sdcardDir + "/voiceMemo/recordFile";
+		mFileName = fileDir + "/" + System.currentTimeMillis() + ".amr";
+	}
+
 	private void onPlay(boolean start) {
 		if (start) {
 			startPlaying();

@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -17,17 +17,19 @@
             android:name="com.example.voicememo.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                 
                 <action android:name="android.intent.action.MAIN" />
-                
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name=".recordActivity"
-            android:theme="@android:style/Theme.Dialog"></activity>
-        
-         <!-- 
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+		<activity 
+		    android:name=".QueryActivity"
+		    android:theme="@android:style/Theme.Dialog"></activity>
+        <!--
         <receiver android:name="StartupReceiver">
             <intent-filter>
                
@@ -35,13 +37,23 @@
                  
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
-        <service android:name=".FxService" android:enabled="true" ></service>
-        <service android:name=".FloatingServicce" android:enabled="true" ></service>
+        <service
+            android:name=".FxService"
+            android:enabled="true" >
+        </service>
+        <service
+            android:name=".FloatingServicce"
+            android:enabled="true" >
+        </service>
     </application>
-  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-  <!-- 
-   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    -->
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+
+<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/> -->
+
 </manifest>
