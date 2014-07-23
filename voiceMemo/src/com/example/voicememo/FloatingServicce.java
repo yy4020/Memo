@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import cn.qihoo.calendar.audio.AudioRecord;
 
 /**
  * 悬浮窗Service 该服务会在后台一直运行一个悬浮的透明的窗体。
@@ -201,13 +202,18 @@ public class FloatingServicce extends Service {
 			if(v.getId()==R.id.setting){
 //				settingView = LayoutInflater.from(FloatingServicce.this).inflate(R.layout.setting, null);
 //				windowManager.addView(settingView, mParams);
-				Intent intent=new Intent(FloatingServicce.this, newActivity.class);
+				Intent intent=new Intent(FloatingServicce.this, recordActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(intent);
+				showItem( );
 			}
 			if(v.getId()==R.id.record){
-				
+				Intent intent=new Intent(FloatingServicce.this, recordActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
+				showItem( );
 			}
 			if(v.getId()==R.id.check){
 				

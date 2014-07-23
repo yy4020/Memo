@@ -24,8 +24,9 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".newActivity"
+            android:name=".recordActivity"
             android:theme="@android:style/Theme.Dialog"></activity>
+        
          <!-- 
         <receiver android:name="StartupReceiver">
             <intent-filter>

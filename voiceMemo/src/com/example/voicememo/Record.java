@@ -61,7 +61,7 @@ public class Record {
 	// 获取sdcard路径
 	File sdcardDir = Environment.getExternalStorageDirectory()
 			.getAbsoluteFile();
-	String path = sdcardDir + "/"+ "testRecord.mp3";
+	String path = sdcardDir + "/"+System.currentTimeMillis()+ ".amr";
 
 	public void beginMediaRecording(int paramInt) {
 
