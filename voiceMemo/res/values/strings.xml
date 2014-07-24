@@ -4,5 +4,12 @@
     <string name="app_name">voiceMemo</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="cancle">取消</string>
+    <string name="ok">确定</string>
+    <string-array name="setnote_array">
+        <item>开会</item>
+        <item>考试</item>
+    </string-array>
 
 </resources>

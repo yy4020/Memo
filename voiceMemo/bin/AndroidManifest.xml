@@ -29,6 +29,10 @@
 		<activity 
 		    android:name=".QueryActivity"
 		    android:theme="@android:style/Theme.Dialog"></activity>
+		<activity
+            android:name="com.xia.clockActivity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
         <!--
         <receiver android:name="StartupReceiver">
             <intent-filter>

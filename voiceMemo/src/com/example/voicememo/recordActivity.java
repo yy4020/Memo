@@ -1,7 +1,10 @@
 package com.example.voicememo;
 
+import com.xia.clockActivity;
+
 import cn.qihoo.calendar.audio.Record;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,6 +84,10 @@ public class recordActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent intent=new Intent(recordActivity.this, clockActivity.class);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
 				
 			}
 		});
